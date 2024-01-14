@@ -1,6 +1,8 @@
 import user from "../source/user.json";
 import data from "../source/data.json";
 import friends from '../source/friends.json';
+import transactions from '../source/transactions.json'
+
 import React from 'react';
 
 const Profile = ({user}) => (
@@ -11,7 +13,7 @@ const Profile = ({user}) => (
         alt="User avatar"
         className="avatar"
       />
-      <p className="name">{user.username}</p>
+      <p className="profile-name">{user.username}</p>
       <p className="tag">@{user.tag}</p>
       <p className="location">{user.location}</p>
     </div>
@@ -50,10 +52,10 @@ const Statistics = ({ title, stats }) => (
 
 const FriendListItem = ({ avatar, name, isOnline }) => {
   return (
-    <li className="item">
+    <li className="friends-item">
       <img className="avatar" src={avatar} alt="User avatar" width="48" />
-      <p className="name">{name}       <span className={`status ${isOnline ? 'online' : 'offline'}`}></span>
-</p>
+      <p className="name">{name} <span className={`status ${isOnline ? 'online' : 'offline'}`}></span>
+      </p>
     </li>
   );
 };
@@ -68,6 +70,40 @@ const FriendList = ({ friends }) => {
   );
 };
 
+const Transaction = ({ transactions }) => (
+  <table className="transaction-history">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Amount</th>
+        <th>Currency</th>
+      </tr>
+    </thead>
+    <TransactionTable transactions={transactions} />
+  </table>
+);
+
+const TransactionTable = ({ transactions }) => {
+  return (
+    <tbody className="table-body">
+      {transactions.map((transaction) => (
+        <TransactionTableItem key={transaction.id} {...transaction} />
+      ))}
+    </tbody>
+  );
+};
+
+const TransactionTableItem = ({ type, amount, currency }) => {
+  return (
+    <tr className="item">
+      <td>{type}</td>
+      <td>{amount}</td>
+      <td>{currency}</td>
+    </tr>
+  );
+};
+
+
 export const App = () => {
   return (
     <div
@@ -76,18 +112,19 @@ export const App = () => {
         display: 'flex',
         margin: 'auto',
         justifyContent: 'center',
-        alignItems: 'center',
+        alignItems: 'baseline',
         fontSize: 40,
         color: '#010101',
         maxWidth: '1500px',
         flexWrap: 'wrap',
-        marginBottom: '40px'
+        marginBottom: '40px',
+        marginTop: '40px'
       }}
     >
       <Profile user={user} />
       <FriendList friends={friends} />
-      <Statistics data={data} />
-
+      <Statistics title="Statistics" data={data} />
+      <Transaction transactions={transactions} />
     </div>
   );
 };
