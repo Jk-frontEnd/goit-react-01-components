@@ -103,7 +103,6 @@ const TransactionTableItem = ({ type, amount, currency }) => {
   );
 };
 
-
 export const App = () => {
   return (
     <div
