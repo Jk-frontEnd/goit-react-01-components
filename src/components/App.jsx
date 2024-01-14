@@ -40,7 +40,7 @@ const Statistics = ({ title, stats }) => (
     {title && <h2 className="title">{title}</h2>}
 
     <ul className="stat-list">
-      {data.map(item => (
+      {stats.map(item => (
         <li className="item" key={item.id}>
           <span className="label">{item.label}</span>
           <span className="percentage">{item.percentage}%</span>
@@ -48,7 +48,8 @@ const Statistics = ({ title, stats }) => (
       ))}
     </ul>
   </section>
-)
+);
+
 
 const FriendListItem = ({ avatar, name, isOnline }) => {
   return (
@@ -122,7 +123,7 @@ export const App = () => {
     >
       <Profile user={user} />
       <FriendList friends={friends} />
-      <Statistics title="Statistics" data={data} />
+      <Statistics stats={data} />
       <Transaction transactions={transactions} />
     </div>
   );
